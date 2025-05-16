@@ -40,6 +40,16 @@
             margin-top: 100px;
             margin-left: 220px;
         }
+
+        #itemPage {
+            margin-top: 100px;
+            margin-left: 220px;
+        }
+
+        #orderPage {
+            margin-top: 100px;
+            margin-left: 220px;
+        }
     </style>
 </head>
 <body>
@@ -175,7 +185,7 @@
 </section>
 
 <!--Inventory section-->
-<section id="itemDetails" style="display: none;" >
+<section id="itemPage" style="display: none;" >
     <main class="container mt-4">
         <div class="card p-4">
             <h4>Add New Item</h4>
@@ -185,8 +195,8 @@
                     <input type="text" class="form-control" id="code" placeholder="Enter Item Code">
                 </div>
                 <div class="col-md-3">
-                    <label for="iName" class="form-label">Item Name</label>
-                    <input type="text" class="form-control" id="iName" placeholder="Enter Item Name">
+                    <label for="itemName" class="form-label">Item Name</label>
+                    <input type="text" class="form-control" id="itemName" placeholder="Enter Item Name">
                 </div>
                 <div class="col-md-3">
                     <label for="qty" class="form-label">Quantity</label>
@@ -198,7 +208,7 @@
                 </div>
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-success" id="item-save">Save</button>
+                <button type="button" class="btn btn-success" id="item_save">Save</button>
                 <button type="button" class="btn btn-warning" id="item_update">Update</button>
                 <button type="button" class="btn btn-danger" id="item_delete">Delete</button>
             </div>
@@ -211,8 +221,9 @@
                 <tr>
                     <th scope="col">Code</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price</th>
                     <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+
                 </tr>
                 </thead>
                 <tbody id="item_tbody">
@@ -224,7 +235,7 @@
 </section>
 
 <!--Order Section-->
-<section id="orderDetails" style="display: none;">
+<section id="orderPage" style="display: none;">
     <main class="container mt-5">
         <div class="row">
             <!-- Invoice Details -->
@@ -317,6 +328,7 @@
 <script src="assets/lib/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="controller/CustomerController.js" type="module"></script>
+<script src="controller/ItemController.js" type="module"></script>
 <!--<script>-->
 <!--    $("#customers_nav").on('click', function () {-->
 <!--        $("#customerPage").css("display", "block");-->
@@ -379,7 +391,7 @@
 <!--</script>-->
 <script>
     function showSection(sectionId) {
-        const sections = ['#homePage', '#customerPage', '#itemDetails', '#orderDetails'];
+        const sections = ['#homePage', '#customerPage', '#itemPage', '#orderPage'];
         sections.forEach(id => $(id).hide());
         $(sectionId).show();
     }
@@ -391,10 +403,10 @@
         showSection("#customerPage");
     });
     $("#inventory_nav").on('click', function () {
-        showSection("#itemDetails");
+        showSection("#itemPage");
     });
     $("#sales_nav").on('click', function () {
-        showSection("#orderDetails");
+        showSection("#orderPage");
     });
 
     $(document).ready(function () {
