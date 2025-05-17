@@ -18,6 +18,9 @@
             background-color: #f8f9fa;
             padding-top: 1rem;
             border-right: 1px solid #dee2e6;
+            font-size: 1.2rem;
+            color: darkblue;
+            font-family:"Segoe UI";
         }
         .main-content {
             margin-left: 220px;
@@ -47,8 +50,28 @@
         }
 
         #orderPage {
-            margin-top: 100px;
+            margin-top: 70px;
             margin-left: 220px;
+        }
+
+        h1 {
+            color:midnightblue;
+            font-family: Serif;
+        }
+
+        h1.center{
+            margin-left: 450px;
+        }
+
+        /*#nav-links{*/
+        /*    margin-top: 20px;*/
+        /*}*/
+
+        .nav-link{
+            margin-top: 10px;
+        }
+        .nav-link:hover{
+            background-color: lightblue;
         }
     </style>
 </head>
@@ -63,13 +86,11 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <ul class="nav flex-column">
+    <ul class="nav flex-column" id="nav-links">
         <li class="nav-item"><a class="nav-link active" href="#" id="dashboard_nav">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" id="inventory_nav">Inventory</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" id="sales_nav">Sales</a></li>
-        <li class="nav-item"><a class="nav-link" href="#customerPage" id="customers_nav">Customers</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" id="reports_nav">Reports</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" id="setting_nav">Settings</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="customers_nav">Customers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="inventory_nav">Items</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="sales_nav">Orders</a></li>
     </ul>
 </div>
 
@@ -83,10 +104,10 @@
                 <img src="images/background.jpg" class="d-block w-100" alt="Gem 1">
             </div>
             <div class="carousel-item">
-                <img src="images/background.jpg" class="d-block w-100" alt="Gem 2">
+                <img src="images/background2.jpg" class="d-block w-100" alt="Gem 2">
             </div>
             <div class="carousel-item">
-                <img src="images/background.jpg" class="d-block w-100" alt="Gem 3">
+                <img src="images/background3.jpg" class="d-block w-100" alt="Gem 3">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -135,8 +156,18 @@
 <!--Customer Section-->
 <section id="customerPage" style="display: none;">
     <main class="container mt-4">
+        <h1 class="center">Customer Manage</h1>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-danger">Clear All</button>
+            <button type="button" class="btn btn-info">View All Customers</button>
+        </div>
+
+        <br>
+
         <div class="card p-3 mb-4">
             <h4 class="card-title">Add New Customer</h4>
+
             <form id="customer_form">
                 <div class="row">
                     <div class="col-md-3 mb-3">
@@ -187,6 +218,15 @@
 <!--Inventory section-->
 <section id="itemPage" style="display: none;" >
     <main class="container mt-4">
+        <h1 class="center">Item Manage</h1>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-danger">Clear All</button>
+            <button type="button" class="btn btn-info">View All Items</button>
+        </div>
+
+        <br>
+
         <div class="card p-4">
             <h4>Add New Item</h4>
             <div class="row mb-3">
@@ -239,6 +279,15 @@
     <main class="container mt-5">
         <div class="row">
             <!-- Invoice Details -->
+
+            <!-- left: -->
+            <div class="col-md-8 d-flex align-items-start justify-content-center">
+                <h1>Order Manage</h1>
+                <button type="button" class="btn btn-outline-danger">Clear All</button>
+                <button type="button" class="btn btn-info">View All Customers</button>
+            </div>
+
+            <!-- Right: Invoice Details -->
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">Invoice Details</div>
@@ -247,9 +296,32 @@
                             <label class="form-label">Order ID:</label>
                             <input type="text" class="form-control" id="oId" />
                         </div>
+                        <div class="form-group">
+                            <label>Date :</label>
+                            <input type="date" class="form-control" id="oDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Customer Select -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Customer Select</div>
+                    <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Customer ID:</label>
                             <input type="text" class="form-control" id="cId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Customer Name:</label>
+                            <input type="text" class="form-control" id="cName" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telephone:</label>
+                            <input type="number" class="form-control" id="telephone" />
                         </div>
                     </div>
                 </div>
@@ -329,6 +401,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="controller/CustomerController.js" type="module"></script>
 <script src="controller/ItemController.js" type="module"></script>
+<script src="controller/OrderController.js" type="module"></script>
+
 <!--<script>-->
 <!--    $("#customers_nav").on('click', function () {-->
 <!--        $("#customerPage").css("display", "block");-->
