@@ -15,11 +15,10 @@
             top: 56px;
             left: 0;
             width: 220px;
-            background-color: #f8f9fa;
+            background-color: midnightblue;
             padding-top: 1rem;
             border-right: 1px solid #dee2e6;
             font-size: 1.2rem;
-            color: darkblue;
             font-family:"Segoe UI";
         }
         .main-content {
@@ -63,16 +62,26 @@
             margin-left: 450px;
         }
 
-        /*#nav-links{*/
-        /*    margin-top: 20px;*/
-        /*}*/
+        .nav-link.active{
+           background-color: gray;
+        }
 
         .nav-link{
             margin-top: 10px;
+            /*margin-left: 2rem;*/
+            color: white;
         }
         .nav-link:hover{
-            background-color: lightblue;
+            background-color: white;
+            color: midnightblue;
         }
+
+        #log-out{
+            margin-top: 350px;
+            margin-left: 3rem;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -92,6 +101,8 @@
         <li class="nav-item"><a class="nav-link" href="#" id="inventory_nav">Items</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="sales_nav">Orders</a></li>
     </ul>
+
+    <button type="button" class="btn btn-light" id="log-out">Log Out</button>
 </div>
 
 <section id="homePage" style="display: none;">
