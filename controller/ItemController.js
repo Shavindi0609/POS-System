@@ -1,22 +1,33 @@
-import {item_db} from "../db/db.js";
+import { item_db } from "../db/db.js";
 import ItemModel from "../model/ItemModel.js";
 
-$("#item_save").on('click' , function (){
-    let code = $('#code').val();
+// Auto-generate item code like I001, I002, ...
+function generateItemCode() {
+    let nextId = item_db.length + 1;
+    return `I${nextId.toString().padStart(3, '0')}`;
+}
+
+// Set initial code on load
+$(document).ready(function () {
+    $('#code').val(generateItemCode());
+});
+
+// Save item
+$("#item_save").on('click', function () {
+    let code = $('#code').val() || generateItemCode();
     let itemName = $('#itemName').val();
     let qty = $('#qty').val();
     let price = $('#price').val();
 
-    if (code === '' || itemName === '' || qty === '' || price === '') {
+    if (itemName === '' || qty === '' || price === '') {
         Swal.fire({
             title: 'Error!',
             text: 'Invalid Inputs',
             icon: 'error',
             confirmButtonText: 'Ok'
-        })
-
-    }else {
-        let item_data = new ItemModel(code,itemName,qty,price);
+        });
+    } else {
+        let item_data = new ItemModel(code, itemName, qty, price);
 
         item_db.push(item_data);
         console.log(item_db);
@@ -29,50 +40,41 @@ $("#item_save").on('click' , function (){
             draggable: true
         });
     }
-})
+});
 
-function loadTableData(){
+// Load item table
+function loadTableData() {
     $('#item_tbody').empty();
 
-    item_db.map((item,index)=>{
-        let code = item.code;
-        let itemName = item.itemName;
-        let qty = item.qty;
-        let price = item.price;
-
+    item_db.map((item, index) => {
         let data = `<tr>
-                        <td>${index+1}</td>
-                        <td>${itemName}</td>
-                        <td>${qty}</td>
-                        <td>${price}</td>`
+                        <td>${index + 1}</td>
+                        <td>${item.itemName}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.price}</td>
+                    </tr>`;
         $('#item_tbody').append(data);
-    })
+    });
 }
 
+// Row click to populate fields
 let idx = -1;
-
-$("#item_tbody").on('click' , 'tr' , function (){
+$("#item_tbody").on('click', 'tr', function () {
     idx = $(this).index();
-    console.log(idx);
 
-    let obj = item_db[idx]
-    console.log(obj)
+    let obj = item_db[idx];
 
-    let code = obj.code;
-    let itemName = obj.itemName;
-    let qty = obj.qty;
-    let price = obj.price;
+    $("#code").val(obj.code);
+    $("#itemName").val(obj.itemName);
+    $("#qty").val(obj.qty);
+    $("#price").val(obj.price);
+});
 
-    $("#code").val(code);
-    $("#itemName").val(itemName);
-    $("#qty").val(qty);
-    $("#price").val(price);
-})
-
-$("#item_update").on('click' , function (){
-    if (idx === -1){
-        alert("please select item")
-        return
+// Update item
+$("#item_update").on('click', function () {
+    if (idx === -1) {
+        alert("Please select an item to update.");
+        return;
     }
 
     let code = $('#code').val();
@@ -87,49 +89,48 @@ $("#item_update").on('click' , function (){
 
     loadTableData();
 
-    idx = -1
+    idx = -1;
     clear();
 
     Swal.fire({
         title: "Updated Successfully!",
         icon: "success",
     });
+});
 
-})
-
-$("#item_delete").on('click' , function (){
-    if (idx === -1){
-        alert("select items")
-        return
+// Delete item
+$("#item_delete").on('click', function () {
+    if (idx === -1) {
+        alert("Please select an item to delete.");
+        return;
     }
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "This Customer will be removed permanently.",
+        text: "This item will be removed permanently.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!'
-    }).then((result)=>{
-        if (result.isConfirmed){
-            item_db.splice(idx,1);
-
+    }).then((result) => {
+        if (result.isConfirmed) {
+            item_db.splice(idx, 1);
             loadTableData();
-
             idx = -1;
             clear();
 
             Swal.fire({
                 title: 'Deleted!',
-                text: 'The Customer has been removed.',
+                text: 'The item has been removed.',
                 icon: 'success'
             });
         }
-    })
-})
-function clear(){
-    $('#code').val('');
+    });
+});
+
+// Clear input fields and auto-generate next code
+function clear() {
+    $('#code').val(generateItemCode());
     $('#itemName').val('');
     $('#qty').val('');
     $('#price').val('');
-
 }

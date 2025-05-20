@@ -97,6 +97,7 @@
             width: 100%;
             height: 100%;
             background: url("images/background3.jpg"), #000;
+            /*background-color:#3a4885;*/
             background-position: center;
             background-size: cover;
         }
@@ -195,6 +196,57 @@
             color: #fff;
         }
 
+        /* Register section inherits the same .login layout */
+        /*.register {*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    min-height: 100vh;*/
+        /*    width: 100%;*/
+        /*    padding: 0 10px;*/
+        /*}*/
+
+        /*.register::before {*/
+        /*    content: "";*/
+        /*    position: absolute;*/
+        /*    width: 100%;*/
+        /*    height: 100%;*/
+        /*    background: url("images/background5.jpg"), #000;*/
+        /*    background-position: center;*/
+        /*    background-size: cover;*/
+        /*    z-index: -1;*/
+        /*}*/
+
+        /*!* Adjust terms checkbox section *!*/
+        /*.terms {*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    margin: 20px 0;*/
+        /*    color: #fff;*/
+        /*    font-size: 14px;*/
+        /*}*/
+
+        /*.terms input[type="checkbox"] {*/
+        /*    accent-color: #fff;*/
+        /*    margin-right: 8px;*/
+        /*}*/
+
+        /*!* Login link inside register form *!*/
+        /*.login-link {*/
+        /*    margin-top: 20px;*/
+        /*    text-align: center;*/
+        /*    color: #fff;*/
+        /*}*/
+
+        /*.login-link a {*/
+        /*    color: #efefef;*/
+        /*    text-decoration: none;*/
+        /*}*/
+
+        /*.login-link a:hover {*/
+        /*    text-decoration: underline;*/
+        /*}*/
+
     </style>
 </head>
 <body>
@@ -213,7 +265,7 @@
         <li class="nav-item"><a class="nav-link" href="#" id="customers_nav">Customers</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="inventory_nav">Items</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="sales_nav">Orders</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" id="login_nav">Login</a></li>
+<!--        <li class="nav-item"><a class="nav-link" href="#" id="login_nav">Login</a></li>-->
     </ul>
 
     <button type="button" class="btn btn-light" id="log-out">Log Out</button>
@@ -548,6 +600,48 @@
     </div>
 </section>
 
+<section class="register" id="registerPage" style="display: none;">
+    <div class="wrapper">
+        <form action="#">
+            <h2>Register</h2>
+
+            <div class="input-field">
+                <input type="text" required>
+                <label>Enter your name</label>
+            </div>
+
+            <div class="input-field">
+                <input type="text" required>
+                <label>Enter your email</label>
+            </div>
+
+            <div class="input-field">
+                <input type="password" required>
+                <label>Create a password</label>
+            </div>
+
+            <div class="input-field">
+                <input type="password" required>
+                <label>Confirm your password</label>
+            </div>
+
+            <div class="terms">
+                <label for="terms">
+                    <input type="checkbox" id="terms" required>
+                    <p>I agree to the <a href="#">terms and conditions</a></p>
+                </label>
+            </div>
+
+            <button type="submit">Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="#" id="goToLogin">Log In</a></p>
+            </div>
+        </form>
+    </div>
+</section>
+
+
 <script src="assets/lib/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="controller/CustomerController.js" type="module"></script>
@@ -556,7 +650,7 @@
 
 <script>
     function showSection(sectionId) {
-        const sections = ['#loginPage', '#homePage', '#customerPage', '#itemPage', '#orderPage'] ;
+        const sections = ['#loginPage', 'registerPage','#homePage', '#customerPage', '#itemPage', '#orderPage'] ;
         sections.forEach(id => $(id).hide());
         $(sectionId).show();
     }
@@ -574,7 +668,7 @@
         showSection("#orderPage");
     });
 
-    $("#login_nav").on('click', function () {
+    $("#log-out").on('click', function () {
         showSection("#loginPage");
     });
 
@@ -591,6 +685,18 @@
         // Hide login page and show dashboard
         showSection("#homePage");
     });
+
+    // Navigate to Register page when "Register" link is clicked
+    // $(".register a").on("click", function (e) {
+    //     e.preventDefault();
+    //     showSection("#registerPage");
+    // });
+    //
+    // // Navigate to Login page when "Log In" link is clicked
+    // $("#goToLogin").on("click", function (e) {
+    //     e.preventDefault();
+    //     showSection("#loginPage");
+    // });
 
 </script>
 
