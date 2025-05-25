@@ -1,28 +1,37 @@
 import { customer_db } from "../db/db.js";
 import CustomerModel from "../model/CustomerModel.js";
 
-// Auto-generate ID like C001, C002, ...
+
 function generateCustomerId() {
     let nextId = customer_db.length + 1;
-    return `C${nextId.toString().padStart(3, '0')}`; // pad with zeros
+    return `C${nextId.toString().padStart(3, '0')}`;
 }
 
-// Set default ID on load
+
 $(document).ready(function () {
     $('#id').val(generateCustomerId());
 });
 
-// Save customer
+
 $("#customer_save").on('click', function () {
     let id = $('#id').val() || generateCustomerId();
     let name = $('#name').val();
     let address = $('#address').val();
     let contact = $('#contact').val();
 
+    const contactRegex = /^[0-9]{10}$/;
+
     if (name === '' || address === '' || contact === '') {
         Swal.fire({
             title: 'Error!',
-            text: 'Invalid Inputs',
+            text: 'All fields are required!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+    } else if (!contactRegex.test(contact)) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Contact number must be exactly 10 digits.',
             icon: 'error',
             confirmButtonText: 'Ok'
         });
@@ -42,7 +51,6 @@ $("#customer_save").on('click', function () {
     }
 });
 
-// Load all customers
 function loadCustomers() {
     $('#customer_tbody').empty();
     customer_db.map((item, index) => {
@@ -56,7 +64,7 @@ function loadCustomers() {
     });
 }
 
-// Select customer row
+
 let idx = -1;
 $("#customer_tbody").on('click', 'tr', function () {
     idx = $(this).index();
@@ -68,7 +76,7 @@ $("#customer_tbody").on('click', 'tr', function () {
     $("#contact").val(obj.contact);
 });
 
-// Update customer
+
 $("#customer_update").on('click', function () {
     if (idx === -1) {
         alert("Please select a Customer to update.");
@@ -79,6 +87,26 @@ $("#customer_update").on('click', function () {
     let name = $("#name").val();
     let address = $("#address").val();
     let contact = $("#contact").val();
+
+    const contactRegex = /^[0-9]{10}$/;
+
+    if (name === '' || address === '' || contact === '') {
+        Swal.fire({
+            title: 'Error!',
+            text: 'All fields are required!',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    } else if (!contactRegex.test(contact)) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Contact number must be exactly 10 digits.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
 
     customer_db[idx].id = id;
     customer_db[idx].name = name;
@@ -95,7 +123,7 @@ $("#customer_update").on('click', function () {
     });
 });
 
-// Delete customer
+
 $("#customer_delete").on('click', function () {
     if (idx === -1) {
         alert("Please select a Customer to delete.");
@@ -124,7 +152,7 @@ $("#customer_delete").on('click', function () {
     });
 });
 
-// Clear input fields and reset ID
+
 function clear() {
     $('#id').val(generateCustomerId());
     $('#name').val('');
